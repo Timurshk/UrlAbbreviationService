@@ -28,6 +28,8 @@ func Url(w http.ResponseWriter, r *http.Request) {
 	type LongURL = string
 	Url := string(b)
 	UrlS := hanglers.Shortening(Url)
+	w.Header().Add("Content-Type", "text/plain; charset=utf-8")
+	w.WriteHeader(http.StatusCreated)
 	w.Write([]byte(UrlS))
 }
 
