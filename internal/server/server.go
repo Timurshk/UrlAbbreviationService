@@ -12,46 +12,42 @@ type URL struct {
 }
 
 func Url(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodPost {
-		http.Error(w, "only POST requests are allowed", http.StatusMethodNotAllowed)
-		return
-	}
-	b, err := io.ReadAll(r.Body)
-	if err != nil {
-		http.Error(w, err.Error(), 500)
-		return
-	}
-	if len(b) == 0 {
-		http.Error(w, "the body cannot be an empty", http.StatusBadRequest)
-		return
-	}
-	type LongURL = string
-	Url := string(b)
-	UrlS := hanglers.Shortening(Url)
-	w.Header().Add("Content-Type", "text/plain; charset=utf-8")
-	w.WriteHeader(http.StatusCreated)
-	w.Write([]byte(UrlS))
-}
-
-func Get(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodGet {
-		http.Error(w, "Only GET requests are allowed!", 400)
-		return
-	} else {
+	if r.Method == http.MethodPost {
+		b, err := io.ReadAll(r.Body)
+		if err != nil {
+			http.Error(w, err.Error(), 400)
+			return
+		}
+		if len(b) == 0 {
+			http.Error(w, "the body cannot be an empty", 400)
+			return
+		}
+		type LongURL = string
+		Url := string(b)
+		UrlS := hanglers.Shortening(Url)
+		print(Url, UrlS)
+		w.Header().Add("Content-Type", "text/plain; charset=utf-8")
+		w.WriteHeader(201)
+		w.Write([]byte(UrlS))
+	} else if r.Method == http.MethodGet {
 		q := r.URL.Query().Get("id")
+		print(q)
 		if q == "" {
 			http.Error(w, "The query parameter is missing", http.StatusBadRequest)
 			return
 		} else {
 			UrlG := storage.ShortUrl[q]
+			w.Header().Set("Content-Type", "text/plain")
 			w.Header().Add("Location", UrlG)
 			http.Redirect(w, r, UrlG, http.StatusTemporaryRedirect)
 		}
+	} else {
+		http.Error(w, "Only GET requests are allowed!", 400)
+		return
 	}
 }
 
 func Server() {
-	http.HandleFunc("/POST", Url)
-	http.HandleFunc("/GET/", Get)
+	http.HandleFunc("/", Url)
 	http.ListenAndServe(":8080", nil)
 }
