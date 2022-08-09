@@ -26,7 +26,7 @@ func Url(w http.ResponseWriter, r *http.Request) {
 		Url := string(b)
 		UrlS := hanglers.Shortening(Url)
 		print(Url, UrlS)
-		w.Header().Add("Content-Type", "text/plain; charset=utf-8")
+		w.Header().Set("Content-Type", "text/plain")
 		w.WriteHeader(201)
 		w.Write([]byte(UrlS))
 	} else if r.Method == http.MethodGet {
