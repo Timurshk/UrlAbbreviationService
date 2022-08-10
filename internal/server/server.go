@@ -37,6 +37,9 @@ func Url(w http.ResponseWriter, r *http.Request) {
 			return
 		} else {
 			UrlG := storage.ShortUrl[q]
+			if UrlG == "" {
+				http.Error(w, "the body cannot be an empty", 400)
+			}
 			w.Header().Set("Content-Type", "text/plain")
 			w.Header().Set("Location", UrlG)
 			w.WriteHeader(307)
