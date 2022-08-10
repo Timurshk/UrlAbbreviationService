@@ -39,7 +39,7 @@ func Url(w http.ResponseWriter, r *http.Request) {
 			UrlG := storage.ShortUrl[q]
 			w.Header().Set("Content-Type", "text/plain")
 			w.Header().Set("Location", UrlG)
-			w.WriteHeader(http.StatusTemporaryRedirect)
+			w.WriteHeader(307)
 		}
 	} else {
 		http.Error(w, "Only GET requests are allowed!", 400)
