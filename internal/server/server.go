@@ -28,7 +28,8 @@ func Url(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
 		UrlS := hanglers.Shortening(Url)
 		w.Header().Set("Content-Type", "text/plain")
 		w.WriteHeader(201)
-		w.Write([]byte(UrlS))
+		asd := "localhost:8080/" + UrlS
+		w.Write([]byte(asd))
 	} else if r.Method == http.MethodGet {
 		q := params.ByName("id")
 		//q := r.URL.Query().Get("id")
