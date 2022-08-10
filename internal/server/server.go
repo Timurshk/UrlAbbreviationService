@@ -26,14 +26,12 @@ func Url(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
 		type LongURL = string
 		Url := string(b)
 		UrlS := hanglers.Shortening(Url)
-		print(Url, UrlS)
 		w.Header().Set("Content-Type", "text/plain")
 		w.WriteHeader(201)
 		w.Write([]byte(UrlS))
 	} else if r.Method == http.MethodGet {
 		q := params.ByName("id")
 		//q := r.URL.Query().Get("id")
-		print(q)
 		if q == "" {
 			http.Error(w, "The query parameter is missing", http.StatusBadRequest)
 			return
