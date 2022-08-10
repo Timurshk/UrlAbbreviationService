@@ -6,10 +6,10 @@ import (
 )
 
 func Shortening(Url string) string {
-
+	numbers := "1234567890"
 	urlS := make([]byte, 5)
 	for i := range urlS {
-		urlS[i] = []byte(Url)[rand.Intn(len(Url))]
+		urlS[i] = []byte(numbers)[rand.Intn(len(numbers))]
 	}
 	storage.ShortUrl[string(urlS)] = Url
 	return string(urlS)
