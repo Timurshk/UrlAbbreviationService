@@ -22,28 +22,27 @@ func TestGet(t *testing.T) {
 				contentType: "application/json"},
 		},
 	}
-		for _, tt := range tests{
-		t.Run(tt.name, func (t *testing.T){
-		Get(tt.args.w, tt.args.r)
-	})
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			Get(tt.args.w, tt.args.r)
+		})
 	}
-	}
+}
 
-	func TestUrl(t * testing.T)
-	{
-		type args struct {
-			w http.ResponseWriter
-			r *http.Request
-		}
-		tests := []struct {
-			name string
-			args args
-		}{
-			// TODO: Add test cases.
-		}
-		for _, tt := range tests {
-			t.Run(tt.name, func(t *testing.T) {
-				Url(tt.args.w, tt.args.r)
-			})
-		}
+func TestUrl(t *testing.T) {
+	type args struct {
+		w http.ResponseWriter
+		r *http.Request
 	}
+	tests := []struct {
+		name string
+		args args
+	}{
+		// TODO: Add test cases.
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			Url(tt.args.w, tt.args.r)
+		})
+	}
+}
