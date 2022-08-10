@@ -41,8 +41,8 @@ func Url(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
 				http.Error(w, "the body cannot be an empty", 400)
 			}
 			w.Header().Set("Content-Type", "text/plain")
-			w.WriteHeader(307)
 			w.Header().Set("Location", UrlG)
+			w.WriteHeader(http.StatusTemporaryRedirect)
 		}
 	} else {
 		http.Error(w, "Only GET requests are allowed!", 400)
