@@ -3,6 +3,7 @@ package server
 import (
 	"github.com/Timurshk/internal/hanglers"
 	"github.com/Timurshk/internal/storage"
+	"github.com/julienschmidt/httprouter"
 	"io"
 	"net/http"
 )
@@ -11,7 +12,7 @@ type URL struct {
 	URL string `json:"URL"`
 }
 
-func Url(w http.ResponseWriter, r *http.Request) {
+func Url(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
 	if r.Method == http.MethodPost {
 		b, err := io.ReadAll(r.Body)
 		if err != nil {
@@ -30,7 +31,8 @@ func Url(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(201)
 		w.Write([]byte(UrlS))
 	} else if r.Method == http.MethodGet {
-		q := r.URL.Query().Get("id")
+		q := params.ByName("id")
+		//q := r.URL.Query().Get("id")
 		print(q)
 		if q == "" {
 			http.Error(w, "The query parameter is missing", http.StatusBadRequest)
@@ -51,6 +53,8 @@ func Url(w http.ResponseWriter, r *http.Request) {
 }
 
 func Server() {
-	http.HandleFunc("/", Url)
-	http.ListenAndServe(":8080", nil)
+	router := httprouter.New()
+	router.POST("/", Url)
+	router.GET("/:id", Url)
+	http.ListenAndServe("localhost:8080", router)
 }
