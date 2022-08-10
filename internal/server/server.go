@@ -49,26 +49,10 @@ func Url(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
 		return
 	}
 }
-func UrlLong(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
-	q := params.ByName("id")
-	//q := r.URL.Query().Get("id")
-	if q == "" {
-		http.Error(w, "The query parameter is missing", http.StatusBadRequest)
-		return
-	} else {
-		UrlG := storage.ShortUrl[q]
-		if UrlG == "" {
-			http.Error(w, "the body cannot be an empty", 400)
-		}
-		w.Header().Set("Content-Type", "text/plain")
-		w.Header().Set("Location", UrlG)
-		w.WriteHeader(http.StatusTemporaryRedirect)
-	}
-}
 
 func Server() {
 	router := httprouter.New()
 	router.POST("/", Url)
-	router.GET("/:id", UrlLong)
-	http.ListenAndServe("localhost:8080", router)
+	router.GET("/:id", Url)
+	http.ListenAndServe(":8080", router)
 }
