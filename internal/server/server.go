@@ -50,9 +50,9 @@ func Url(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
 	}
 }
 
-func Server() {
+func Server(host string) {
 	router := httprouter.New()
 	router.POST("/", Url)
 	router.GET("/:id", Url)
-	http.ListenAndServe(":8080", router)
+	_ = http.ListenAndServe(host, router)
 }
