@@ -14,15 +14,15 @@ type URL struct {
 
 func Shortening(Url string) string {
 	numbers := "1234567890"
-	urlS := make([]byte, 5)
-	for i := range urlS {
-		urlS[i] = []byte(numbers)[rand.Intn(len(numbers))]
+	URLS := make([]byte, 5)
+	for i := range URLS {
+		URLS[i] = []byte(numbers)[rand.Intn(len(numbers))]
 	}
-	storage.ShortUrl[string(urlS)] = Url
-	return string(urlS)
+	storage.ShortURL[string(URLS)] = Url
+	return string(URLS)
 }
 
-func PostUrl(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+func PostURL(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	if r.Method != http.MethodPost {
 		http.Error(w, "Only POST requests are allowed!", 400)
 		return
@@ -44,7 +44,7 @@ func PostUrl(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	w.Write([]byte(UrlS))
 }
 
-func GetUrl(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
+func GetURL(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
 	if r.Method != http.MethodGet {
 		http.Error(w, "Only GET requests are allowed!", 400)
 		return
@@ -54,11 +54,11 @@ func GetUrl(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
 		http.Error(w, "The query parameter is missing", 400)
 		return
 	}
-	UrlG := storage.ShortUrl[id]
-	if UrlG == "" {
+	URLG := storage.ShortURL[id]
+	if URLG == "" {
 		http.Error(w, "the body cannot be an empty", 400)
 	}
 	w.Header().Set("Content-Type", "text/plain")
-	w.Header().Set("Location", UrlG)
+	w.Header().Set("Location", URLG)
 	w.WriteHeader(http.StatusTemporaryRedirect)
 }

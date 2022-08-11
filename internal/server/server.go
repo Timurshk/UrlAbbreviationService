@@ -8,7 +8,7 @@ import (
 
 func Server() {
 	router := httprouter.New()
-	router.POST("/", hanglers.PostUrl)
-	router.GET("/:id", hanglers.GetUrl)
+	router.POST("/", hanglers.PostURL)
+	router.GET("/:id", hanglers.GetURL)
 	http.ListenAndServe("localhost:8080", router)
 }

@@ -1,5 +1,5 @@
 package storage
 
 var (
-	ShortUrl = map[string]string{}
+	ShortURL = map[string]string{}
 )

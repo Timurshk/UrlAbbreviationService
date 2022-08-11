@@ -46,9 +46,9 @@ func TestGetUrl(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			for _, tt := range tests {
-				storage.ShortUrl[tt.id] = tt.long
+				storage.ShortURL[tt.id] = tt.long
 				router := httprouter.New()
-				router.GET("/:id", GetUrl)
+				router.GET("/:id", GetURL)
 				req := httptest.NewRequest(http.MethodGet, tt.request, nil)
 				rr := httptest.NewRecorder()
 				router.ServeHTTP(rr, req)
@@ -90,7 +90,7 @@ func TestPostUrl(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			router := httprouter.New()
-			router.POST(tt.request, PostUrl)
+			router.POST(tt.request, PostURL)
 			req := httptest.NewRequest(http.MethodPost, tt.request, bytes.NewBufferString(tt.body))
 			rr := httptest.NewRecorder()
 			router.ServeHTTP(rr, req)
