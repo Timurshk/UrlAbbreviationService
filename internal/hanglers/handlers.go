@@ -12,13 +12,13 @@ type URL struct {
 	URL string `json:"URL"`
 }
 
-func Shortening(Url string) string {
+func Shortening(URL string) string {
 	numbers := "1234567890"
 	URLS := make([]byte, 5)
 	for i := range URLS {
 		URLS[i] = []byte(numbers)[rand.Intn(len(numbers))]
 	}
-	storage.ShortURL[string(URLS)] = Url
+	storage.ShortURL[string(URLS)] = URL
 	return string(URLS)
 }
 
@@ -37,11 +37,11 @@ func PostURL(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 		http.Error(w, "the body cannot be an empty", 400)
 		return
 	}
-	Url := string(body)
-	UrlS := "http://localhost:8080/" + Shortening(Url)
+	URL := string(body)
+	URLS := "http://localhost:8080/" + Shortening(URL)
 	w.Header().Set("Content-Type", "text/plain")
 	w.WriteHeader(201)
-	w.Write([]byte(UrlS))
+	w.Write([]byte(URLS))
 }
 
 func GetURL(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
