@@ -2,7 +2,7 @@ package server
 
 import (
 	"github.com/Timurshk/internal/hanglers"
-	storage "github.com/Timurshk/internal/storage"
+	"github.com/Timurshk/internal/storage"
 	"github.com/julienschmidt/httprouter"
 	"io"
 	"net/http"
@@ -28,8 +28,7 @@ func Url(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
 		UrlS := hanglers.Shortening(Url)
 		w.Header().Set("Content-Type", "text/plain")
 		w.WriteHeader(201)
-		asd := "localhost:8080/" + UrlS
-		w.Write([]byte(asd))
+		w.Write([]byte(UrlS))
 	} else if r.Method == http.MethodGet {
 		q := params.ByName("id")
 		//q := r.URL.Query().Get("id")
