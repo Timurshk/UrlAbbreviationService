@@ -1,3 +1,9 @@
 package main
 
-func main() {}
+import (
+	"github.com/Timurshk/internal/server"
+)
+
+func main() {
+	server.Server()
+}
