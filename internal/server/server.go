@@ -24,7 +24,7 @@ func PostUrl(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 			return
 		}
 		Url := string(body)
-		UrlS := "https://localhost:8080/" + hanglers.Shortening(Url)
+		UrlS := "http://localhost:8080/" + hanglers.Shortening(Url)
 		w.Header().Set("Content-Type", "text/plain")
 		w.WriteHeader(201)
 		w.Write([]byte(UrlS))
