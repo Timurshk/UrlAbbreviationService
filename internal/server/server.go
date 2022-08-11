@@ -12,47 +12,51 @@ type URL struct {
 	URL string `json:"URL"`
 }
 
-func Url(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
+func PostUrl(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	if r.Method == http.MethodPost {
-		b, err := io.ReadAll(r.Body)
+		body, err := io.ReadAll(r.Body)
 		if err != nil {
 			http.Error(w, err.Error(), 400)
 			return
 		}
-		if len(b) == 0 {
+		if len(body) == 0 {
 			http.Error(w, "the body cannot be an empty", 400)
 			return
 		}
-		type LongURL = string
-		Url := string(b)
-		UrlS := hanglers.Shortening(Url)
+		Url := string(body)
+		UrlS := "https://localhost:8080/" + hanglers.Shortening(Url)
 		w.Header().Set("Content-Type", "text/plain")
 		w.WriteHeader(201)
 		w.Write([]byte(UrlS))
-	} else if r.Method == http.MethodGet {
-		q := params.ByName("id")
-		//q := r.URL.Query().Get("id")
-		if q == "" {
-			http.Error(w, "The query parameter is missing", http.StatusBadRequest)
+	} else {
+		http.Error(w, "Only POST requests are allowed!", 400)
+		return
+	}
+}
+
+func GetUrl(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
+	if r.Method == http.MethodGet {
+		id := params.ByName("id")
+		if id == "" {
+			http.Error(w, "The query parameter is missing", 400)
 			return
-		} else {
-			UrlG := storage.ShortUrl[q]
-			if UrlG == "" {
-				http.Error(w, "the body cannot be an empty", 400)
-			}
-			w.Header().Set("Content-Type", "text/plain")
-			w.Header().Set("Location", UrlG)
-			w.WriteHeader(http.StatusTemporaryRedirect)
 		}
+		UrlG := storage.ShortUrl[id]
+		if UrlG == "" {
+			http.Error(w, "the body cannot be an empty", 400)
+		}
+		w.Header().Set("Content-Type", "text/plain")
+		w.Header().Set("Location", UrlG)
+		w.WriteHeader(http.StatusTemporaryRedirect)
 	} else {
 		http.Error(w, "Only GET requests are allowed!", 400)
 		return
 	}
 }
 
-func Server(host string) {
+func Server() {
 	router := httprouter.New()
-	router.POST("/", Url)
-	router.GET("/:id", Url)
-	_ = http.ListenAndServe(host, router)
+	router.POST("/", PostUrl)
+	router.GET("/:id", GetUrl)
+	http.ListenAndServe("localhost:8080", router)
 }
