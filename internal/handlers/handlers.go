@@ -2,12 +2,12 @@ package handlers
 
 import (
 	"fmt"
-	"github.com/Timurshk/internal/storage"
-	"github.com/go-chi/chi/v5"
-)
-import (
 	"io"
 	"net/http"
+
+	"github.com/go-chi/chi/v5"
+
+	"github.com/Timurshk/internal/storage"
 )
 
 const Host = "http://localhost:8080/%v"

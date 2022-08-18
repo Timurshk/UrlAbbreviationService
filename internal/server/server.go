@@ -2,14 +2,13 @@ package server
 
 import (
 	"fmt"
-	"github.com/Timurshk/internal/handlers"
 	"log"
+	"net/http"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
-)
-import (
-	"net/http"
+
+	"github.com/Timurshk/internal/handlers"
 )
 
 type Server struct {

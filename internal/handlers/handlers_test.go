@@ -1,14 +1,16 @@
 package handlers
 
 import (
-	"github.com/Timurshk/internal/storage"
-	"github.com/go-chi/chi/v5"
-	"github.com/stretchr/testify/assert"
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
 	"strings"
 	"testing"
+
+	"github.com/go-chi/chi/v5"
+	"github.com/stretchr/testify/assert"
+
+	"github.com/Timurshk/internal/storage"
 )
 
 func TestGetHandler(t *testing.T) {
