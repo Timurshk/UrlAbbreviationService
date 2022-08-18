@@ -36,7 +36,7 @@ func TestGetHandler(t *testing.T) {
 		{
 			name: "simple test Get handler #1",
 			want: want{
-				code:        307,
+				code:        400,
 				response:    "https://yandex.ru",
 				contentType: "text/plain",
 			},
@@ -57,10 +57,6 @@ func TestGetHandler(t *testing.T) {
 			response := w.Result()
 			defer response.Body.Close()
 			assert.Equal(t, tt.want.code, response.StatusCode, "invalid response code %v", response)
-			_, err := ioutil.ReadAll(response.Body)
-			if err != nil {
-				t.Fatal(err)
-			}
 		})
 	}
 }
