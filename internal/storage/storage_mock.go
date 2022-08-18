@@ -7,9 +7,7 @@ import (
 type MockStorage DB
 
 var data = map[string]string{
-	"1234":   "https://go.dev",
-	"12345":  "https://mail.google.com",
-	"123456": "https://practicum.yandex.ru",
+	"12345": "https://yandex.ru",
 }
 
 func (s *MockStorage) GenerateMockData() {

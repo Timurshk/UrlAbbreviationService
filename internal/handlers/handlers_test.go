@@ -37,12 +37,12 @@ func TestGetHandler(t *testing.T) {
 			name: "simple test Get handler #1",
 			want: want{
 				code:        307,
-				response:    "<a href=\"https://go.dev\">Temporary Redirect</a>.\n\n",
+				response:    "https://yandex.ru",
 				contentType: "text/plain; charset=utf-8",
 			},
 			request: request{
 				method: http.MethodGet,
-				target: "https://go.dev/1234",
+				target: "http://localhost:8080/12345",
 				path:   "/{id}",
 			},
 		},
@@ -89,12 +89,12 @@ func TestPostHandler(t *testing.T) {
 			name: "simple test Post handler #1",
 			want: want{
 				code:        201,
-				response:    "https://go.dev/1234",
+				response:    "http://localhost:8080/12345",
 				contentType: "text/plain; charset=utf-8",
 			},
 			request: request{
 				method: http.MethodPost,
-				target: "https://go.dev",
+				target: "http://localhost:8080",
 				path:   "/",
 			},
 		},
