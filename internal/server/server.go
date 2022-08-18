@@ -1,14 +1,38 @@
 package server
 
 import (
-	"github.com/Timurshk/internal/hanglers"
-	"github.com/julienschmidt/httprouter"
+	"fmt"
+	"github.com/Timurshk/internal/handlers"
+	"log"
+
+	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/v5/middleware"
+)
+import (
 	"net/http"
 )
 
-func Server() {
-	router := httprouter.New()
-	router.POST("/", hanglers.PostURL)
-	router.GET("/:id", hanglers.GetURL)
-	http.ListenAndServe("localhost:8080", router)
+type Server struct {
+	host string
+	port string
+}
+
+func New(host, port string) *Server {
+	return &Server{
+		host: host,
+		port: port,
+	}
+}
+
+func (s *Server) Start() {
+	handlers := handlers.New()
+	router := chi.NewRouter()
+	router.Use(middleware.Logger)
+	router.Use(middleware.Recoverer)
+	router.Route("/", func(r chi.Router) {
+		router.Get("/{id}", handlers.GetURL)
+		router.Post("/", handlers.PostURL)
+	})
+	addr := fmt.Sprintf("%s:%s", s.host, s.port)
+	log.Fatal(http.ListenAndServe(addr, router))
 }
