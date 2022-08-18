@@ -42,8 +42,8 @@ func TestGetHandler(t *testing.T) {
 			},
 			request: request{
 				method: http.MethodGet,
-				target: "12345",
-				path:   "http://localhost:8080/{id}",
+				target: "http://localhost:8080/12345",
+				path:   "/{id}",
 			},
 		},
 	}
