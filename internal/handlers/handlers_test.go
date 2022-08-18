@@ -38,12 +38,12 @@ func TestGetHandler(t *testing.T) {
 			want: want{
 				code:        307,
 				response:    "https://yandex.ru",
-				contentType: "text/plain; charset=utf-8",
+				contentType: "text/plain",
 			},
 			request: request{
 				method: http.MethodGet,
-				target: "http://localhost:8080/12345",
-				path:   "/{id}",
+				target: "12345",
+				path:   "http://localhost:8080/{id}",
 			},
 		},
 	}
@@ -56,7 +56,7 @@ func TestGetHandler(t *testing.T) {
 			router.ServeHTTP(w, request)
 			response := w.Result()
 			defer response.Body.Close()
-			assert.Equal(t, tt.want.code, response.StatusCode, "invalid response code")
+			assert.Equal(t, tt.want.code, response.StatusCode, "invalid response code %v", response)
 			_, err := ioutil.ReadAll(response.Body)
 			if err != nil {
 				t.Fatal(err)
@@ -90,7 +90,7 @@ func TestPostHandler(t *testing.T) {
 			want: want{
 				code:        201,
 				response:    "http://localhost:8080/12345",
-				contentType: "text/plain; charset=utf-8",
+				contentType: "text/plain",
 			},
 			request: request{
 				method: http.MethodPost,
