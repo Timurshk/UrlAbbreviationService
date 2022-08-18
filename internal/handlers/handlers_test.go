@@ -42,7 +42,7 @@ func TestGetHandler(t *testing.T) {
 			},
 			request: request{
 				method: http.MethodGet,
-				target: "https://go.dev/GMWJGSAPGA",
+				target: "https://go.dev/1234",
 				path:   "/{id}",
 			},
 		},
@@ -89,7 +89,7 @@ func TestPostHandler(t *testing.T) {
 			name: "simple test Post handler #1",
 			want: want{
 				code:        201,
-				response:    "https://go.dev/GMWJGSAPGA",
+				response:    "https://go.dev/1234",
 				contentType: "text/plain; charset=utf-8",
 			},
 			request: request{
