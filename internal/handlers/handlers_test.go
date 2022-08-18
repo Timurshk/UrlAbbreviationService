@@ -36,7 +36,7 @@ func TestGetHandler(t *testing.T) {
 		{
 			name: "simple test Get handler #1",
 			want: want{
-				code:        http.StatusTemporaryRedirect,
+				code:        307,
 				response:    "<a href=\"https://go.dev\">Temporary Redirect</a>.\n\n",
 				contentType: "text/plain; charset=utf-8",
 			},
@@ -88,7 +88,7 @@ func TestPostHandler(t *testing.T) {
 		{
 			name: "simple test Post handler #1",
 			want: want{
-				code:        http.StatusCreated,
+				code:        201,
 				response:    "https://go.dev/GMWJGSAPGA",
 				contentType: "text/plain; charset=utf-8",
 			},
