@@ -8,7 +8,7 @@ import (
 
 type Storage interface {
 	Load(sl string) (string, error)
-	Store(url string) (sl string)
+	Store(url string) (sl string, err error)
 }
 
 type DB struct {
@@ -26,7 +26,7 @@ func (d *DB) Load(sl string) (string, error) {
 	return link, nil
 }
 
-func (d *DB) Store(url string) (sl string) {
+func (d *DB) Store(url string) (sl string, err error) {
 	d.mu.Lock()
 	defer d.mu.Unlock()
 	sl = Shortening()
@@ -39,34 +39,6 @@ func New() *DB {
 		data: make(map[string]string),
 	}
 }
-
-//type DB struct {
-//	mx  sync.Mutex
-//	URL map[string]string
-//}
-//
-//func NewDB() *DB {
-//	return &DB{
-//		URL: make(map[string]string),
-//	}
-//}
-//
-//func (d *DB) Load(key string) (string, bool) {
-//	d.mx.Lock()
-//	defer d.mx.Unlock()
-//	val, ok := d.URL[key]
-//	return val, ok
-//}
-//
-//func (d *DB) Store(key string, value string) {
-//	d.mx.Lock()
-//	defer d.mx.Unlock()
-//	d.URL[key] = value
-//}
-//
-//type URL struct {
-//	URL string `json:"URL"`
-//}
 
 func Shortening() string {
 	numbers := "1234567890"

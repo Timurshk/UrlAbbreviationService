@@ -21,18 +21,14 @@ func (s *MockStorage) Load(urls string) (string, error) {
 	if !ok {
 		return link, errors.New("url not found")
 	}
-
 	return link, nil
 }
 
-func (s *MockStorage) Store(url string) (urls string) {
+func (s *MockStorage) Store(url string) (urls string, err error) {
 	urls = Shortening()
-
 	if s.data == nil {
 		s.data = make(map[string]string)
 	}
-
 	s.data[urls] = url
-
 	return
 }

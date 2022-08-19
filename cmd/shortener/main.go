@@ -9,5 +9,6 @@ const Port = "8080"
 
 func main() {
 	serv := server.New(Host, Port)
+	print(serv)
 	serv.Start()
 }

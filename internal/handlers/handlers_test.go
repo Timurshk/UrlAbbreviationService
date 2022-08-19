@@ -36,7 +36,7 @@ func TestGetHandler(t *testing.T) {
 		{
 			name: "simple test Get handler #1",
 			want: want{
-				code:        400,
+				code:        http.StatusBadRequest,
 				response:    "https://yandex.ru",
 				contentType: "text/plain",
 			},
@@ -84,7 +84,7 @@ func TestPostHandler(t *testing.T) {
 		{
 			name: "simple test Post handler #1",
 			want: want{
-				code:        201,
+				code:        http.StatusCreated,
 				response:    "http://localhost:8080/12345",
 				contentType: "text/plain",
 			},
